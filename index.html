@@ -26,16 +26,17 @@
           <div class="row">
             <div class="col s12">
               <label for="pet">Pet</label>
-              <select name="pet" id="pet" class="browser-default">
+              <select name="pet" id="pet" class="browser-default" required>
                 <option value="" selected disabled>Choose one</option>
                 <option value="1">Bulbasaur</option>
                 <option value="4">Charmander</option>
                 <option value="7">Squirtle</option>
-                <option value="16">Pidgey</option>
-                <option value="19">Rattata</option>
-                <option value="21">Spearow</option>
-                <option value="23">Ekans</option>
-                <option value="25">Pikachu</option>
+                <option value="152">Chikorita</option>
+                <option value="155">Cyndaquil</option>
+                <option value="158">Totodile</option>
+                <option value="252">Treecko</option>
+                <option value="255">Torchic</option>
+                <option value="258">Mudkip</option>
               </select>
             </div>
           </div>
@@ -48,37 +49,46 @@
       </div>  <!-- end #form-container -->
 
       <div id="pet-container" class="row hide">
-
-        <div class="col s10 offset-s1">
-          <div class="card-panel red darken-4">
-            <span class="white-text" id="pet-info"></span>
-          </div>
-        </div>
-
         <div class="col s10 offset-s1">
           <div class="card">
+
+            <div class="row">
+              <div class="col s12">
+                <div class="card-panel red darken-4 z-depth-0">
+                  <span class="white-text" id="pet-info"></span>
+                </div>
+              </div>
+            </div>
 
             <div class="card-image">
               <img src="" alt="A picture of your pet" id="pet-image">
             </div>
 
-            <div class="card-content">
-              <span id="pet-feedback"></span>
-            </div>
-
             <div class="card-action">
+
               <div id="button-container" class="row">
-                <div class="col l2"></div>
-                <button class="btn col s12 m3 l2 red darken-4" id="feed-button">Feed</button>
-                <div class="col m1 l1"></div>
-                <button class="btn col s12 m3 l2 red darken-4" id="play-button">Play</button>
-                <div class="col m1 l1"></div>
-                <button class="btn col s12 m3 l2 red darken-4" id="train-button">Train</button>
-                <div class="col l2"></div>
+                <div class="btn-div col s12 m6 l3">
+                  <button class="btn red darken-4 z-depth-0" id="feed-button">Feed</button>
+                </div>
+                <div class="btn-div col s12 m6 l3">
+                  <button class="btn red darken-4 z-depth-0" id="play-button">Play</button>
+                </div>
+                <div class="btn-div col s12 m6 l3">
+                  <button class="btn red darken-4 z-depth-0" id="train-button">Train</button>
+                </div>
+                <div class="btn-div col s12 m6 l3">
+                  <button class="btn red darken-4 z-depth-0" id="rest-button">Rest</button>
+                </div>
               </div>
-              <div id="button-container" class="row">
-                <button class="btn col s10 offset-s1 red darken-4" id="day-button">New Day</button>
+
+              <div id="restart-container" class="row hide">
+                <div class="col s12">
+                  <form action="">
+                    <button class="btn red darken-4 z-depth-0">Find a new pet</button>
+                  </form>
+                </div>
               </div>
+
             </div>
 
           </div>
@@ -89,6 +99,8 @@
     </div>
   </div>  <!-- end #app-container -->
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="./js/Pet.js"></script>
   <script src="./js/index.js"></script>
 
 </body>
