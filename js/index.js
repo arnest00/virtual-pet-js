@@ -1,113 +1,15 @@
 const formContainer = document.querySelector('#form-container'),
       petForm = document.querySelector('form'),
       petContainer = document.querySelector('#pet-container'),
-      petName = document.querySelector('#pet-info'),
+      petInfo = document.querySelector('#pet-info'),
       petImg = document.querySelector('#pet-image'),
       feedBtn = document.querySelector('#feed-button'),
       playBtn = document.querySelector('#play-button'),
       trainBtn = document.querySelector('#train-button'),
-      dayBtn = document.querySelector('#day-button'),
-      petFeedback = document.querySelector('#pet-feedback');
+      restBtn = document.querySelector('#rest-button'),
+      dayBtn = document.querySelector('#day-button');
 
-class Pet {
-  constructor(name, dexNum) {
-    this.name = name;
-    this.dexNum = dexNum;
-    this.level = 1;
-    this.exp = 0;
-    this.affection = 0;
-    this.hunger = 1;
-    this.boredom = 1;
-    this.trained = false;
-    this.dateMet = new Date();
-    this.testDate = [ this.dateMet.getMonth() + 1, this.dateMet.getDate(), this.dateMet.getFullYear() ];
-  };
-
-  feed() {
-    if (this.hunger > 0) {
-      this.hunger -= 1;
-      console.log('hunger', this.hunger);
-      return `You fed ${this.name}!`;
-    } else {
-      return `${this.name} isn't hungry!`;
-    };
-  };
-
-  play() {
-    if (this.boredom > 0) {
-      this.boredom -= 1;
-      console.log('boredom', this.boredom);
-      this.affection += 1;
-      console.log('affection', this.affection);
-      return `You played with ${this.name}!`;
-    } else {
-      return `${this.name} doesn't feel like playing!`;
-    };
-  };
-
-  train() {
-    const neededExp = Math.floor(this.level / 3) + 3;
-
-    if (this.trained === false) {
-
-      this.trained = true;
-      this.exp += 1;
-      console.log('exp', this.exp);
-
-      if (this.exp >= neededExp) {
-        this.level += 1;
-        this.exp = 0;
-        console.log('lvl', this.level);
-        return `${this.name} grew to level ${this.level}!`
-      } else {
-        return `You trained with ${this.name}!`;
-      }
-    } else {
-      return `${this.name} is too tired to train!`;
-    }
-  };
-
-  // methods for testing app
-
-  newMonth() {
-    this.testDate[0] += 1;
-    this.testDate[1] = 1;
-  }
-
-  newDay() {
-    const shortMonths = [ 4, 6, 9, 11 ];
-
-    if (this.testDate[0] === 2) {  // Feb
-      if (this.testDate[2] % 4 === 0 && this.testDate[1] === 29) { // leap year
-        this.newMonth();
-      } else if (this.testDate[1] === 28) {
-        this.newMonth();
-      } else {
-        this.testDate[1] += 1;
-      };
-    } else if (shortMonths.indexOf(this.testDate[0]) !== -1) { // Apr, Jun, Sep, Nov
-      if (this.testDate[1] === 30) {
-        this.newMonth();
-      } else {
-        this.testDate[1] += 1;
-      };
-    } else {  // Jan, Mar, May, Jul, Aug, Oct, Dec
-      if (this.testDate[0] === 12 && this.testDate[1] === 31) { // Dec 31
-        this.testDate[0] = 1;
-        this.testDate[1] = 1;
-        this.testDate[2] += 1;
-      } else if (this.testDate[1] === 31) {
-        this.newMonth();
-      } else {
-        this.testDate[1] += 1;
-      };
-    };
-    
-    this.hunger += 1;
-    this.boredom += 1;
-    this.trained = false;
-  };
-};
+const displayLength = 1000;
 
 petForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -116,29 +18,31 @@ petForm.addEventListener('submit', e => {
         petChoice = document.querySelector('#pet').value;
 
   const newPet = new Pet(nameChoice, petChoice);
-  const { name, dexNum, dateMet, testDate } = newPet;
+  const { name, dexNum } = newPet;
 
-  petName.innerText = `${name}, Level ${newPet.level}, met on ${dateMet.getMonth() + 1}/${dateMet.getDate()}/${dateMet.getFullYear()}`;
+  petForm.reset();
+
+  petInfo.innerText = `${name}, Level ${newPet.level}, known for ${newPet.daysKnown} ${newPet.daysKnown === 1 ? 'day' : 'days'}`;
   petImg.setAttribute('src', `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${dexNum}.png`);
 
   formContainer.classList.add('hide');
   petContainer.classList.remove('hide');
 
   feedBtn.addEventListener('click', e => {
-    petFeedback.innerText = newPet.feed();
+    M.toast({ html: newPet.feed(), displayLength: displayLength });
   });
 
   playBtn.addEventListener('click', e => {
-    petFeedback.innerText = newPet.play();
+    M.toast({ html: newPet.play(), displayLength: displayLength });
   });
 
   trainBtn.addEventListener('click', e => {
-    petFeedback.innerText = newPet.train();
-    petName.innerText = `${name}, Level ${newPet.level}, met on ${dateMet.getMonth() + 1}/${dateMet.getDate()}/${dateMet.getFullYear()}`;
+    M.toast({ html: newPet.train(), displayLength: displayLength });
+    petInfo.innerText = `${name}, Level ${newPet.level}, known for ${newPet.daysKnown} ${newPet.daysKnown === 1 ? 'day' : 'days'}`;
   });
 
-  dayBtn.addEventListener('click', e => {
-    newPet.newDay();
-    petFeedback.innerText = `Today is now ${testDate[0]}/${testDate[1]}/${testDate[2]}!`;
+  restBtn.addEventListener('click', e => {
+    M.toast({ html: newPet.rest(), displayLength: displayLength });
+    petInfo.innerText = `${name}, Level ${newPet.level}, known for ${newPet.daysKnown} ${newPet.daysKnown === 1 ? 'day' : 'days'}`;
   });
 });
