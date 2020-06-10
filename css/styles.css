@@ -3,7 +3,26 @@
 }
 
 #pet-image {
-  width: 96px;
-  height: 96px;
+  width: 192px;
+  height: auto;
   margin: 0 auto;
+}
+
+#button-container {
+  margin-bottom: 0;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  .btn-div {
+    margin-bottom: 1rem;
+  }
+}
+
+.missing-pet {
+  filter: grayscale(100%);
 }
